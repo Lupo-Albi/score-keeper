@@ -1,13 +1,1 @@
-img {
-	width: 700px;
-	height: 580px;
-	flex: auto;
-}
 
-.winner {
-	color: green;
-}
-
-.loser {
-	color: red;
-}

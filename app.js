@@ -1,5 +1,5 @@
-const player1Button = document.querySelector('#player1');
-const player2Button = document.querySelector('#player2');
+const player1Button = document.querySelector('#player1Button');
+const player2Button = document.querySelector('#player2Button');
 const displayPlayer1 = document.querySelector('#scoreP1');
 const displayPlayer2 = document.querySelector('#scoreP2');
 const resetButton = document.querySelector('#reset');
@@ -21,8 +21,10 @@ player1Button.addEventListener('click', function(){
         scorePlayer1 += 1;
         if (scorePlayer1 === parseInt(scoreLimit.value, 10)){
             isGameOver = true;
-            displayPlayer1.classList.add('winner');
-            displayPlayer2.classList.add('loser');
+            displayPlayer1.classList.add('has-text-success');
+            displayPlayer2.classList.add('has-text-danger');
+            player1Button.disabled = true;
+            player2Button.disabled = true;
         }
         displayPlayer1.textContent = scorePlayer1;
     }
@@ -33,8 +35,10 @@ player2Button.addEventListener('click', function(){
         scorePlayer2 += 1;
         if (scorePlayer2 === parseInt(scoreLimit.value, 10)){
             isGameOver = true;
-            displayPlayer2.classList.add('winner');
-            displayPlayer1.classList.add('loser');
+            displayPlayer2.classList.add('has-text-success');
+            displayPlayer1.classList.add('has-text-danger');
+            player1Button.disabled = true;
+            player2Button.disabled = true;
         }
         displayPlayer2.textContent = scorePlayer2;
     }
@@ -50,6 +54,6 @@ function reset() {
     player2Button.disabled = false;
     displayPlayer1.textContent = scorePlayer1;
     displayPlayer2.textContent = scorePlayer2
-    displayPlayer1.classList.remove('winner', 'loser');
-    displayPlayer2.classList.remove('winner', 'loser');
+    displayPlayer1.classList.remove('has-text-success', 'has-text-danger');
+    displayPlayer2.classList.remove('has-text-success', 'has-text-danger');
 }
