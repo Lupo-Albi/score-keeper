@@ -3,3 +3,11 @@ img {
 	height: 580px;
 	flex: auto;
 }
+
+.winner {
+	color: green;
+}
+
+.loser {
+	color: red;
+}
