@@ -1,59 +1,56 @@
-const player1Button = document.querySelector('#player1Button');
-const player2Button = document.querySelector('#player2Button');
-const displayPlayer1 = document.querySelector('#scoreP1');
-const displayPlayer2 = document.querySelector('#scoreP2');
+const player1 = {
+    score: 0,
+    button: document.querySelector('#player1Button'),
+    display: document.querySelector('#scoreP1')
+}
+const player2 = {
+    score: 0,
+    button: document.querySelector('#player2Button'),
+    display: document.querySelector('#scoreP2')
+}
+
 const resetButton = document.querySelector('#reset');
 const scoreLimit = document.querySelector('#score-limit');
-
-let scorePlayer1 = 0;
-let scorePlayer2 = 0;
+let maxPoints = parseInt(scoreLimit.value, 10); // Initial value
 let isGameOver = false;
 
-let maxPoints = parseInt(scoreLimit.value, 10); // Initial value
 // Changing the score limit in the select
 scoreLimit.addEventListener('change', function(){
     maxPoints = parseInt(this.value, 10);
     reset();
 });
 
-player1Button.addEventListener('click', function(){
-    if(!isGameOver) {
-        scorePlayer1 += 1;
-        if (scorePlayer1 === parseInt(scoreLimit.value, 10)){
-            isGameOver = true;
-            displayPlayer1.classList.add('has-text-success');
-            displayPlayer2.classList.add('has-text-danger');
-            player1Button.disabled = true;
-            player2Button.disabled = true;
-        }
-        displayPlayer1.textContent = scorePlayer1;
-    }
+player1.button.addEventListener('click', function(){
+    updateScores(player1, player2);
 });
 
-player2Button.addEventListener('click', function(){
-    if(!isGameOver) {
-        scorePlayer2 += 1;
-        if (scorePlayer2 === parseInt(scoreLimit.value, 10)){
-            isGameOver = true;
-            displayPlayer2.classList.add('has-text-success');
-            displayPlayer1.classList.add('has-text-danger');
-            player1Button.disabled = true;
-            player2Button.disabled = true;
-        }
-        displayPlayer2.textContent = scorePlayer2;
-    }
+player2.button.addEventListener('click', function(){
+    updateScores(player2, player1);
 });
 
 resetButton.addEventListener('click', reset);
 
+function updateScores(player, opponent) {
+    if(!isGameOver) {
+        player.score += 1;
+        if (player.score >= maxPoints & (player.score - opponent.score) >= 2){
+            isGameOver = true;
+            player.display.classList.add('has-text-success');
+            player.button.disabled = true;
+            opponent.display.classList.add('has-text-danger');
+            opponent.button.disabled = true;
+        }
+        player.display.textContent = player.score;
+    }
+}
+
 function reset() {
     isGameOver = false;
-    scorePlayer1 = 0;
-    scorePlayer2 = 0;
-    player1Button.disabled = false;
-    player2Button.disabled = false;
-    displayPlayer1.textContent = scorePlayer1;
-    displayPlayer2.textContent = scorePlayer2
-    displayPlayer1.classList.remove('has-text-success', 'has-text-danger');
-    displayPlayer2.classList.remove('has-text-success', 'has-text-danger');
+
+    for(let player of [player1, player2]) {
+        player.score = 0;
+        player.button.disabled = false;
+        player.display.textContent = player.score;
+        player.display.classList.remove('has-text-success', 'has-text-danger');
+    }
 }
